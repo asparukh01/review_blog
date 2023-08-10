@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Список пользователей
+{% endblock %}
+{% block content %}
+    <div class="container">
+        {% for account in accounts %}
+            <div style="display: flex; justify-content: center; margin-bottom: 20px">
+                <div>
+                    {% if account.image %}
+                            <img style="height: 100px;" src="{{ account.image.url }}">
+                    {% else %}
+                            <img style="width: 200px" src="{% static 'pics/default.jpg' %}" alt="">
+                    {% endif %}
+                </div>
+                <div class="card d-flex form-control">
+                    <a href="{% url 'profile' account.pk %}">
+                        <span class="nav-link active"
+                              style="font-weight: bold">{{ account.get_full_name|default:account.username }}</span>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Список отзывов
+{% endblock %}
+{% block content %}
+
+    <div class="container wrapper">
+        <div class="d-flex row">
+        {% for review in page_obj %}
+                {% if review.status == 'Принят' %}
+                    <div class="card col-md-4" style="width: 18rem; margin: 0 10px 20px 0">
+                        {% if review.image %}
+                            <img src="{{ review.image.url }}" class="card-img-top" alt="...">
+                        {% else %}
+                            <img src="{% static 'pics/default.jpg' %}" class="card-img-top" alt="">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">Имя: {{ review.name }}</h5>
+                            <p class="card-text">Статус: {{ review.status }}</p>
+                            <a href="{% url 'review_detail' review.pk %}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                {% endif %}
+        {% endfor %}
+        </div>
+        <div class="container" style="width: 300px; margin-top: 20px;">
+            <form action="{% url 'review_create' %}" method="post" id="review_form" enctype="multipart/form-data">
+                <div class="container">{% include 'partials/review/review_form.html' %}
+                <input type="submit" value="Отправить" class="btn btn-success">
+                </div>
+            </form>
+        </div>  
+        <div class="footer">
+            {% include 'common/paginator.html' %}
+        </div>
+    </div>
+{% endblock %}
+{% block js_block %}
+    <script src="{%  static 'js/review/check_size.js' %}"></script>
+{% endblock %}

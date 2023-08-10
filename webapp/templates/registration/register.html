@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}
+Регистрация
+{% endblock %}
+{% block content %}
+    <div class="container" style="width: 50%">
+        <h1>Регистрация</h1>
+        <form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Имя пользователя</label>
+                <input type="text" class="form-control" value="{{ form.username.value|default:'' }}" id="username" name="username">
+              </div>
+            <div class="mb-3">
+                <label for="first_name" class="form-label">Имя</label>
+                <input type="text" class="form-control" value="{{ form.first_name.value|default:'' }}" id="first_name" name="first_name">
+              </div>
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Фамилия</label>
+                <input type="text" class="form-control" value="{{ form.last_name.value|default:'' }}" id="last_name" name="last_name">
+              </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Фото профиля</label>
+                <input class="form-control" type="file" name="image" id="image" value="{{ form.image.value.url|default:'' }}">
+            </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Пароль</label>
+                <input type="password" class="form-control" id="password" name="password">
+              </div>
+              <div class="mb-3">
+                <label for="password_confirm" class="form-label">Подтвердите пароль</label>
+                <input type="password" class="form-control" id="password_confirm" name="password_confirm">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Почта</label>
+                <input type="email" class="form-control" id="email" value="{{ form.email.value|default:'' }}" name="email">
+            </div>
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        </form>
+    </div>
+{% endblock %}

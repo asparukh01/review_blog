@@ -1,0 +1,22 @@
+{% load static %}  
+{% block content %}  
+    <div class="container wrapper">
+        <div class="d-flex row">
+        {% for review in page_obj %}
+            {% if review.status == 'На модерации' %}
+                    <div class="card col-md-4" style="width: 18rem; margin: 0 10px 20px 0">
+                        {% if review.image %}
+                            <img src="{{ review.image.url }}" class="card-img-top" alt="...">
+                        {% else %}
+                            <img src="{% static 'pics/default.jpg' %}" class="card-img-top" alt="">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">Имя: {{ review.name }}</h5>
+                            <p class="card-text">Статус: {{ review.status }}</p>
+                            <a href="{% url 'review_detail' review.pk %}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                {% endif %}
+        {% endfor %}
+        </div>
+{% endblock %} 

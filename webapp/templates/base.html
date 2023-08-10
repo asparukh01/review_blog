@@ -1,0 +1,37 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href='{% static "css/bootstrap.css" %}'>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}
+    {% endblock %}</title>
+</head>
+<body>
+<div class="container">
+    {% include 'common/menu.html' %}
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            <p>{{ form.errors }}</p>
+        </div>
+    {% endif %}
+</div>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+<script src='{% static "js/jquery.js" %}'></script>
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+<script src='{% static "js/bootstrap.bundle.min.js" %}'></script>
+<script src='{% static "js/bootstrap-table.min.js" %}'></script>
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'js/accounts/logout_api_script.js' %}"></script>
+{% block js_block %}
+{% endblock %}
+</body>
+</html>

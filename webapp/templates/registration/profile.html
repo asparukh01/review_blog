@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Личный кабинет
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Личная страница пользователя {{ account.get_full_name|default:account.username }}</h1>
+    <hr style="border: solid; color: dark">
+        <div style="display: flex;">
+            {% if account.image %}
+                    <img style="width: 40%" src="{{ account.image.url }}" alt="">
+            {% else %}
+                    <img style="width: 40%" src="{% static 'pics/default.jpg' %}" alt="">
+            {% endif %}
+            <div style="margin: 20px 0 0 50px;">
+                <p id="account_id" class="d-none">{{ account.pk }}</p>
+                <p style="font-weight: bold">Имя пользователя: {{ account.username }}</p>
+                <p style="font-weight: bold">Имя: {{ account.first_name }}</p>
+                <p style="font-weight: bold">Фамилия: {{ account.last_name }}</p>
+                <p style="font-weight: bold">Email: {{ account.email }}</p>
+                <p style="font-weight: bold">Отзывы: <span id="review_total">{{ account.review_total }}</span></p>
+                <div>
+                    {% if account.pk == request.user.pk %}
+                        <a class="btn btn-primary" href="{% url 'profile_update' account.pk %}">Редактировать</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr style="border: solid">
+        {% if account.reviews %}
+        <div style="text-align: center;">
+            <h3 style="margin: 20px 0 50px 0;">Мои отзывы</h3>
+            {% if account.pk == request.user.pk %}
+                {% include 'review/my_reviews.html' with page_obj=account.reviews.all%}
+            {% endif %}
+        <div>
+    {% endif %}
+        <div style="text-align: center;">
+        {% if request.user.is_staff %}
+        <h3 style="margin: 20px 0 50px 0;">На модерацию</h3>
+            {% include 'review/moderation_list.html' with page_obj=account.reviews.all%}
+        {% endif %}
+    </div>
+        
+    </div>
+{% endblock %}
+{% block js_block %}
+{% endblock %}

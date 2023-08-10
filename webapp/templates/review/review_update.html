@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Редактирование отзыва
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <h1>Редактирование объявлении</h1>
+    <form action="{% url 'review_update' review.pk %}" id="review_update" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container">
+            {% include 'partials/review/update_form.html' %}
+        <input
+        type="submit" id="button_update"
+        data-review-id="{{ review.pk }}"
+        data-review-title="{{ review.name }}"
+        data-review-email="{{ review.email }}"
+        data-review-text="{{ review.text }}"
+        data-review-status="{{ review.status }}"
+        value="Изменить" class="btn btn-success">
+        </div>
+    </form>
+    </div>
+{% endblock %}

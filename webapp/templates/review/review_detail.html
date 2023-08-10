@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Детальный просмотр отзыва
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <p id="review_id" class="d-none">{{ review.pk }}</p>
+        <h1>{{ review.name }}</h1>
+        <div style="display: flex;">
+            {% if review.image %}
+                <img style="width: 40%" src="{{ review.image.url }}" alt="">
+            {% else %}
+                <img style="width: 40%" src="{% static 'pics/default.jpg' %}" alt="">
+            {% endif %}
+            <div style="margin: 20px 0 0 50px;">
+                <p style="font-weight: bold">Статус: {{ review.status }}</p>
+                <p style="font-weight: bold">Автор: {{ review.author }}</p>
+                <p style="font-weight: bold">Дата создания: {{ review.created_at }}</p>
+                <p style="font-weight: bold">Email: {{ review.email }}</p>
+                <p style="font-weight: bold">Описание: {{ review.text }}</p>
+                <div>
+                    {% if request.user.is_satff %}
+                        <a class="btn btn-primary" href="{% url 'review_update' review.pk %}">Редактировать</a>
+                        <button data-bs-toggle="modal" id="delete_review" data-bs-target="#exampleModal" class="btn btn-danger"
+                                href="{% url 'review_delete' review.pk %}">Удалить
+                        </button>
+                        {% include 'review/review_delete.html' with deleted_object=review %}
+                        {% if review.status == "Принят" %}
+                            <a hidden class="btn btn-success" id="publication">Принять</a>
+                            <a class="btn btn-success" id="unpublication">Отклонить</a>
+                        {% elif review.status == "На модерации" %}
+                            <a class="btn btn-success" id="publication">Принять</a>
+                            <a class="btn btn-success" id="unpublication">Отклонить</a>
+                        {% else %}
+                            <a class="btn btn-success" id="publication">Принять</a>
+                            <a hidden class="btn btn-success" id="unpublication">Отклонить</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js_block %}
+    <script src="{% static 'js/review/review_delete.js' %}"></script>
+    <script src="{% static 'js/review/review_publication.js' %}"></script>
+{% endblock %}

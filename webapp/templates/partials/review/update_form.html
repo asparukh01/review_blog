@@ -1,0 +1,30 @@
+{% csrf_token %}
+<div class="mb-3">
+    <label for="name" class="form-label">Имя:</label>
+    <input type="text" name="name" class="form-control" id="name" value="{{ form.name.value|default:'' }}">
+    <div class="form-text c-red">{{ form.errors.name }}</div>
+</div>
+<div class="mb-3">
+    <label for="email" class="form-label">Email:</label>
+    <input type="email" name="email" class="form-control" id="email" value="{{ form.email.value|default:'' }}">
+    <div class="form-text c-red">{{ form.errors.email }}</div>
+</div>
+<div class="mb-3">
+    <label for="text" class="form-label">Текст:</label>
+    <textarea class="form-control" name="text" id="text" cols="30"
+              rows="4">{{ form.text.value|default:'' }}</textarea>
+    <div class="form-text c-red">{{ form.errors.text }}</div>
+</div>
+<div class="mb-3 d-none">
+    <label for="status" class="form-label">Статус: <span class="text-danger">*</span></label><br>
+    <select class="form-select" name="status" id="status">
+            {% for status in statuses %}
+                {% if status.0 == form.status.value %}
+                    <option selected value="{{ status.0 }}">{{ status.1 }}</option>
+                {% else %}
+                    <option value="{{ status.0 }}">{{ status.1 }}</option>
+                {% endif %}
+            {% endfor %}
+    </select>
+    <div class="form-text c-red">{{ form.errors.status }}</div>
+</div>
