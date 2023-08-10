@@ -19,8 +19,13 @@
 
 
 ## Данные по БД
+
 'NAME': 'postgress',
+
 'USER': 'postgress',
+
 'PASSWORD': 'postgress',
+
 'HOST': 'localhost',
+
 'PORT': 5432,
